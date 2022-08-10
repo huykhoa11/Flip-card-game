@@ -2,9 +2,11 @@
 
 body {
     background-color: #eee;
+    
 }
 
 .container {
+    font-family: 'Mouse Memoirs';
     position: absolute;
     left: 0;
     right: 0;
@@ -15,7 +17,6 @@ body {
 
 .header {
     margin: 20px 0;
-    font-family: 'Mouse Memoirs';
 }
 
 .header__text {

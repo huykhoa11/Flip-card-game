@@ -1,4 +1,4 @@
-let count = 0;
+let count = 0;  //count numbers of flips
 let countFlips = document.getElementById('countFlips');
 const board = document.getElementById('board');
 let toggleFlag = [];
@@ -39,21 +39,30 @@ for(let i=0; i<18; i++) {
     div.className = 'board__item';              //add class name <div class="board__item"></div>
 
     div.addEventListener('click', () => {
-        count += 1;
-        countFlips.innerHTML = `Flips: ${count}`
 
         const imgLink = toggleBgImg[i];
-        if(toggleFlag[i] === false) {           //face-up cards
+        if(toggleFlag[i] === false) {          //Only can click when cards are face-down. When cards are face-up, can't click.
+            toggleFlag[i] = true;
+
+            //update countFlips
+            count += 1;
+            countFlips.innerHTML = `Flips: ${count}`
+
+            //display background iamge when click
             div.style.backgroundImage = `url(${imgLink})`;
             div.classList.add('toggle');
-        }
-        else {      //face-down cards
-            div.style.background = 'linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c)';
-            div.classList.remove('toggle');
+
+            //cards will auto face-down after 2s
+            setTimeout(()=> {
+                div.style.background = 'linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c)';
+                div.classList.remove('toggle');
+                toggleFlag[i] = false;
+            } ,2000)
         }
 
         // div.classList.toggle("toggle");
-        toggleFlag[i] = !toggleFlag[i];
+        // toggleFlag[i] = !toggleFlag[i];
+
     })
 
     board.appendChild(div);
