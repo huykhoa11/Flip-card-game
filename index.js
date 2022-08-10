@@ -14,7 +14,7 @@ const sampleImg = [
     './img/80.jpg',
 ];
 let toggleBgImg = [...sampleImg, ...sampleImg];
-toggleBgImg = shuffle(toggleBgImg);
+toggleBgImg = shuffle(toggleBgImg);     //add background image to each item
 console.log(toggleBgImg);
 
 function shuffle(arr) {
@@ -35,19 +35,19 @@ function shuffle(arr) {
 
 for(let i=0; i<18; i++) {
     toggleFlag.push(false);
-    const div = document.createElement('div');
-    div.className = 'board__item';
+    const div = document.createElement('div');  //create <div></div>
+    div.className = 'board__item';              //add class name <div class="board__item"></div>
 
     div.addEventListener('click', () => {
         count += 1;
         countFlips.innerHTML = `Flips: ${count}`
 
         const imgLink = toggleBgImg[i];
-        if(toggleFlag[i] === false) {
+        if(toggleFlag[i] === false) {           //face-up cards
             div.style.backgroundImage = `url(${imgLink})`;
             div.classList.add('toggle');
         }
-        else {
+        else {      //face-down cards
             div.style.background = 'linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c)';
             div.classList.remove('toggle');
         }
