@@ -1,7 +1,7 @@
 let count = 0;  //count numbers of flips
 let countFlips = document.getElementById('countFlips');
 const board = document.getElementById('board');
-let toggleFlag = [];
+let isFaceDown = [];
 const sampleImg = [
     './img/0.jpg',
     './img/10.jpg',
@@ -21,7 +21,7 @@ function shuffle(arr) {
     const length = arr.length;
 
     for(let i=0; i<length; i++) {
-        //random an index from range(0 -> 11)
+        //random an index from range(0 -> 17)
         const swapIndex = Math.floor(Math.random() * length);
 
         // Swap value using destructuring assignment
@@ -34,15 +34,15 @@ function shuffle(arr) {
 
 
 for(let i=0; i<18; i++) {
-    toggleFlag.push(false);
+    isFaceDown.push(false);
     const div = document.createElement('div');  //create <div></div>
     div.className = 'board__item';              //add class name <div class="board__item"></div>
 
     div.addEventListener('click', () => {
 
         const imgLink = toggleBgImg[i];
-        if(toggleFlag[i] === false) {          //Only can click when cards are face-down. When cards are face-up, can't click.
-            toggleFlag[i] = true;
+        if(isFaceDown[i] === false) {          //Only can click when cards are face-down. When cards are face-up, can't click.
+            isFaceDown[i] = true;
 
             //update countFlips
             count += 1;
@@ -56,12 +56,12 @@ for(let i=0; i<18; i++) {
             setTimeout(()=> {
                 div.style.background = 'linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c)';
                 div.classList.remove('toggle');
-                toggleFlag[i] = false;
+                isFaceDown[i] = false;
             } ,2000)
         }
 
         // div.classList.toggle("toggle");
-        // toggleFlag[i] = !toggleFlag[i];
+        // isFaceDown[i] = !isFaceDown[i];
 
     })
 
