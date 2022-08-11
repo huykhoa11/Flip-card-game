@@ -14,7 +14,7 @@ const sampleImg = [
     './img/80.jpg',
 ];
 let toggleBgImg = [...sampleImg, ...sampleImg];
-toggleBgImg = shuffle(toggleBgImg);     //add background image to each item
+toggleBgImg = shuffle(toggleBgImg);     //shuffle and add background image to each item
 console.log(toggleBgImg);
 
 function shuffle(arr) {

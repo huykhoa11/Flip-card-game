@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-    font-family: 'Mouse Memoirs';
+    font-family: 'Mouse Memoirs', sans-serif;
     position: absolute;
     left: 0;
     right: 0;
