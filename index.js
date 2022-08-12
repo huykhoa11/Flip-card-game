@@ -6,7 +6,7 @@ let afterWinModalElement = document.getElementById('winnerModal');
 let timeElement = document.getElementById('countTime');
 let countSeconds = 0;
 let countMinutes = 0;
-setInterval(()=>{
+const timerInterVal = setInterval(()=>{
     if(countSeconds < 60) {
         countSeconds += 1;
     }
@@ -126,6 +126,7 @@ for(let cardsIndex = 0; cardsIndex < 18; cardsIndex++) {
             console.log(isWin);
             if(isWin === 9) {
                 afterWinModalElement.style.display = 'flex';
+                clearInterval(timerInterVal);
             }
         }
 
