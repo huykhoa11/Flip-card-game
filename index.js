@@ -1,8 +1,24 @@
 let numberOfFlips = 0;  //count numbers of flips
-let numberOfFlipsElement  = document.getElementById('countFlips');
+let numberOfFlipsElement = document.getElementById('countFlips');
 const board = document.getElementById('board');
+let afterWinModalElement = document.getElementById('winnerModal');
+
+let timeElement = document.getElementById('countTime');
+let countSeconds = 0;
+let countMinutes = 0;
+setInterval(()=>{
+    if(countSeconds < 60) {
+        countSeconds += 1;
+    }
+    else {
+        countSeconds = 0;
+        countMinutes += 1;
+    }
+    timeElement.innerHTML = `Time: ${countMinutes}:${countSeconds}`;
+},1000)
 
 let isMatched = new Array (18).fill(false);
+let isWin = 0;
 
 // const sampleImg = [
 //     'img/0.jpg',
@@ -57,12 +73,13 @@ for(let cardsIndex = 0; cardsIndex < 18; cardsIndex++) {
         const imgLink = cardsBackgroundImages[cardsIndex];
         
         if(phase < 2) {
-            phase += 1;
 
             //Only can click when cards are unmatched
             if(isMatched[cardsIndex] === false) {
+                phase += 1;
+
                 numberOfFlips  += 1;
-                numberOfFlipsElement .innerHTML = `Flips: ${count}`
+                numberOfFlipsElement.innerHTML = `Flips: ${numberOfFlips}`
                 
                 cardElement.classList.remove('board__item--background');
                 cardElement.classList.add('toggle');
@@ -104,6 +121,12 @@ for(let cardsIndex = 0; cardsIndex < 18; cardsIndex++) {
                 }
                 phase = 0;
             },700)
+
+            isWin += 1;
+            console.log(isWin);
+            if(isWin === 9) {
+                afterWinModalElement.style.display = 'flex';
+            }
         }
 
 
@@ -124,3 +147,6 @@ for(let cardsIndex = 0; cardsIndex < 18; cardsIndex++) {
         }
     }
 }
+
+
+
