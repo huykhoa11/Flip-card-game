@@ -50,8 +50,63 @@ body {
     transition: all 0.3s;
 }
 
+.board__item--background {
+    background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
+}
+
+.board__item--background2 {
+    background: linear-gradient(#e66465, #9198e5);
+
+}
+
 .toggle {
     transform: rotateY(180deg);
     transition: all 0.3s;
     /* background: linear-gradient(#e66465, #9198e5); */
 }
+
+.backgroundImage0 {
+    background-image: url('./img/0.jpg');
+
+}
+
+.backgroundImage10 {
+    background-image: url('./img/10.jpg');
+
+}
+
+.backgroundImage20 {
+    background-image: url('./img/20.jpg');
+
+}
+
+.backgroundImage30 {
+    background-image: url('./img/30.jpg');
+
+}
+
+.backgroundImage40 {
+    background-image: url('./img/40.jpg');
+
+}
+
+.backgroundImage50 {
+    background-image: url('./img/50.jpg');
+
+}
+
+.backgroundImage60 {
+    background-image: url('./img/60.jpg');
+
+}
+
+.backgroundImage70 {
+    background-image: url('./img/70.jpg');
+
+}
+
+.backgroundImage80 {
+    background-image: url('./img/80.jpg');
+
+}
+

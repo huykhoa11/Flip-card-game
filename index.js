@@ -1,21 +1,28 @@
-let count = 0;  //count numbers of flips
-let countFlips = document.getElementById('countFlips');
+let numberOfFlips = 0;  //count numbers of flips
+let numberOfFlipsElement  = document.getElementById('countFlips');
 const board = document.getElementById('board');
-let isFaceDown = [];
-const sampleImg = [
-    './img/0.jpg',
-    './img/10.jpg',
-    './img/20.jpg',
-    './img/30.jpg',
-    './img/40.jpg',
-    './img/50.jpg',
-    './img/60.jpg',
-    './img/70.jpg',
-    './img/80.jpg',
+
+let isMatched = new Array (18).fill(false);
+
+// const sampleImg = [
+//     'img/0.jpg',
+//     'img/10.jpg',
+//     'img/20.jpg',
+//     'img/30.jpg',
+//     'img/40.jpg',
+//     'img/50.jpg',
+//     'img/60.jpg',
+//     'img/70.jpg',
+//     'img/80.jpg',
+// ];
+
+const sampleImages = [
+    'backgroundImage0','backgroundImage10', 'backgroundImage20', 'backgroundImage30', 'backgroundImage40', 
+    'backgroundImage50', 'backgroundImage60', 'backgroundImage70', 'backgroundImage80'
 ];
-let toggleBgImg = [...sampleImg, ...sampleImg];
-toggleBgImg = shuffle(toggleBgImg);     //shuffle and add background image to each item
-console.log(toggleBgImg);
+let cardsBackgroundImages = [...sampleImages, ...sampleImages];
+cardsBackgroundImages = shuffle(cardsBackgroundImages);     //shuffle and add background image to each item
+console.log(cardsBackgroundImages);
 
 function shuffle(arr) {
     const length = arr.length;
@@ -29,42 +36,91 @@ function shuffle(arr) {
     }
 
     return arr;
-    
 }
 
+let cardCompare1 = '';
+let indexOfCardCompare1 = 0;
+let cardCompare2 = '';
+let indexOfCardCompare2 = 0;
 
-for(let i=0; i<18; i++) {
-    isFaceDown.push(false);
-    const div = document.createElement('div');  //create <div></div>
-    div.className = 'board__item';              //add class name <div class="board__item"></div>
+let phase = 0;  //Trong 1 turn thì chỉ có thể lật 2 lá. Muốn lật tiếp thì phải đợi 2 lá này úp xuống.
+                //VD: lần lật đầu tiên thì phase = 1, lần thứ 2 thì phase = 2. Nếu ko match thì reset phase = 0.
 
-    div.addEventListener('click', () => {
 
-        const imgLink = toggleBgImg[i];
-        if(isFaceDown[i] === false) {          //Only can click when cards are face-down. When cards are face-up, can't click.
-            isFaceDown[i] = true;
+for(let cardsIndex = 0; cardsIndex < 18; cardsIndex++) {
 
-            //update countFlips
-            count += 1;
-            countFlips.innerHTML = `Flips: ${count}`
+    const cardElement = document.createElement('div');  //create <div></div>
+    cardElement.className = 'board__item';              //add class name <div class="board__item"></div>
 
-            //display background iamge when click
-            div.style.backgroundImage = `url(${imgLink})`;
-            div.classList.add('toggle');
+    cardElement.addEventListener('click', () => {
 
-            //cards will auto face-down after 2s
-            setTimeout(()=> {
-                div.style.background = 'linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c)';
-                div.classList.remove('toggle');
-                isFaceDown[i] = false;
-            } ,2000)
+        const imgLink = cardsBackgroundImages[cardsIndex];
+        
+        if(phase < 2) {
+            phase += 1;
+
+            //Only can click when cards are unmatched
+            if(isMatched[cardsIndex] === false) {
+                numberOfFlips  += 1;
+                numberOfFlipsElement .innerHTML = `Flips: ${count}`
+                
+                cardElement.classList.remove('board__item--background');
+                cardElement.classList.add('toggle');
+            }
+
+            if(phase === 1){
+                cardCompare1 = `${imgLink}`;
+                cardElement.classList.add(`${cardCompare1}`)
+                
+                indexOfCardCompare1 = cardsIndex;
+            }
+            else if(phase === 2){
+                cardCompare2 = `${imgLink}`;
+                cardElement.classList.add(`${cardCompare2}`)
+
+                indexOfCardCompare2 = cardsIndex;
+                                
+                checkMatchingPair(cardCompare1, cardCompare2);
+            }
         }
 
-        // div.classList.toggle("toggle");
-        // isFaceDown[i] = !isFaceDown[i];
-
     })
+    board.appendChild(cardElement);
 
-    board.appendChild(div);
+
+    function checkMatchingPair(cardCompare1, cardCompare2) {
+
+        if(cardCompare1 === cardCompare2) {
+            console.log('MATCHING');
+            isMatched[indexOfCardCompare1] = true;
+            isMatched[indexOfCardCompare2] = true;
+
+            const matchingPair = document.querySelectorAll(`.${cardCompare1}`);
+            setTimeout(() => {
+                for(let i=0; i<2; i++) {
+                    matchingPair[i].classList.remove(`${cardCompare1}`);
+                    matchingPair[i].style.background = "#eee";
+                    matchingPair[i].classList.remove('toggle');
+                }
+                phase = 0;
+            },700)
+        }
+
+
+        else {
+            const matchingCard1 = document.querySelector(`.${cardCompare1}`);
+            const matchingCard2 = document.querySelector(`.${cardCompare2}`);
+            setTimeout(()=> {
+                matchingCard1.classList.remove(`${cardCompare1}`);
+                matchingCard1.classList.add('board__item--background')
+                matchingCard1.classList.remove('toggle');
+
+                matchingCard2.classList.remove(`${cardCompare2}`);
+                matchingCard2.classList.add('board__item--background')
+                matchingCard2.classList.remove('toggle');
+
+                phase = 0;
+            }, 1100) 
+        }
+    }
 }
-
