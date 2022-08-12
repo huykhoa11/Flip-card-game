@@ -1,7 +1,7 @@
 let numberOfFlips = 0;  //count numbers of flips
 let numberOfFlipsElement = document.getElementById('countFlips');
 const board = document.getElementById('board');
-let afterWinModalElement = document.getElementById('winnerModal');
+let headerTextElement = document.getElementById('headerText');
 
 let timeElement = document.getElementById('countTime');
 let countSeconds = 0;
@@ -117,7 +117,7 @@ for(let cardsIndex = 0; cardsIndex < 18; cardsIndex++) {
                 for(let i=0; i<2; i++) {
                     matchingPair[i].classList.remove(`${cardCompare1}`);
                     matchingPair[i].style.background = "#eee";
-                    matchingPair[i].classList.remove('toggle');
+                    // matchingPair[i].classList.remove('toggle');
                 }
                 phase = 0;
             },700)
@@ -125,7 +125,7 @@ for(let cardsIndex = 0; cardsIndex < 18; cardsIndex++) {
             isWin += 1;
             console.log(isWin);
             if(isWin === 9) {
-                afterWinModalElement.style.display = 'flex';
+                headerTextElement.innerHTML = 'You are Win'
                 clearInterval(timerInterVal);
             }
         }
